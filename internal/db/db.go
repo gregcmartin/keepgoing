@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -228,6 +229,66 @@ func (d *DB) GetResults(taskID int64) ([]Result, error) {
 		results = append(results, r)
 	}
 	return results, rows.Err()
+}
+
+// FindDuplicateResult checks if a result with the same kind exists where the
+// JSON data contains matching name and company (case-insensitive, normalized).
+func (d *DB) FindDuplicateResult(taskID int64, kind, normName, normCompany string) (*Result, error) {
+	rows, err := d.conn.Query(
+		"SELECT id, task_id, kind, data, created_at FROM results WHERE task_id = ? AND kind = ?",
+		taskID, kind,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var r Result
+		var data string
+		if err := rows.Scan(&r.ID, &r.TaskID, &r.Kind, &data, &r.CreatedAt); err != nil {
+			return nil, err
+		}
+		r.Data = json.RawMessage(data)
+
+		// Extract name and company from stored data for comparison
+		var stored struct {
+			Name    string `json:"name"`
+			Company string `json:"company"`
+		}
+		json.Unmarshal(r.Data, &stored)
+
+		storedName := strings.ToLower(strings.TrimSpace(stored.Name))
+		storedCompany := strings.ToLower(strings.TrimSpace(stored.Company))
+
+		// Remove parenthetical from stored name too
+		if idx := strings.Index(storedName, "("); idx > 0 {
+			storedName = strings.TrimSpace(storedName[:idx])
+		}
+
+		// Match if either name contains the other (handles "Pat Opet" vs "Patrick Opet")
+		nameMatch := strings.Contains(storedName, normName) || strings.Contains(normName, storedName)
+		// Match if company names overlap after normalization
+		companyMatch := strings.Contains(storedCompany, normCompany) || strings.Contains(normCompany, storedCompany)
+
+		if nameMatch && companyMatch {
+			return &r, nil
+		}
+	}
+	return nil, rows.Err()
+}
+
+// UpdateResult updates the data field of an existing result.
+func (d *DB) UpdateResult(id int64, data json.RawMessage) error {
+	_, err := d.conn.Exec("UPDATE results SET data = ? WHERE id = ?", string(data), id)
+	return err
+}
+
+// CountUniqueResults returns the count of results for a task and kind.
+func (d *DB) CountUniqueResults(taskID int64, kind string) (int, error) {
+	var count int
+	err := d.conn.QueryRow("SELECT COUNT(*) FROM results WHERE task_id = ? AND kind = ?", taskID, kind).Scan(&count)
+	return count, err
 }
 
 // SetKV sets a key-value pair.

@@ -64,12 +64,24 @@ func (m *Manager) CompactIfNeeded(ctx context.Context, taskID int64) error {
 		return nil // Not enough to summarize
 	}
 
-	// Build the conversation text for summarization, sanitizing non-text content
+	// Build the conversation text for summarization.
+	// IMPORTANT: For reasoning models, the content field may be empty while
+	// the actual actions are in tool_calls. Include both.
 	var sb strings.Builder
 	for _, msg := range toSummarize {
 		content := sanitizeForSummary(msg.Content)
+
+		// Include tool calls — this is where the actual work is for reasoning models
+		if msg.ToolCalls != nil {
+			content += "\n[Tool calls: " + sanitizeForSummary(*msg.ToolCalls) + "]"
+		}
+
 		if len(content) > 2000 {
 			content = content[:2000] + "...[truncated]"
+		}
+		// Skip truly empty messages
+		if len(strings.TrimSpace(content)) < 3 {
+			continue
 		}
 		sb.WriteString(fmt.Sprintf("[%s]: %s\n", msg.Role, content))
 	}
