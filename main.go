@@ -24,6 +24,7 @@ func main() {
 		model    = flag.String("model", "", "Model name (default: auto-detected)")
 		task     = flag.String("task", "", "New task goal (omit to resume latest)")
 		workDir  = flag.String("workdir", ".", "Working directory")
+		target   = flag.Int("target", 0, "Minimum findings before task can complete (0 = no minimum)")
 	)
 	flag.Parse()
 
@@ -101,13 +102,14 @@ func main() {
 
 	// Create and run agent
 	a := agent.New(agent.Config{
-		DB:          database,
-		LLM:         client,
-		Skills:      registry,
-		CtxManager:  ctxMgr,
-		TaskID:      taskID,
-		WorkDir:     *workDir,
-		ProgressDir: progressDir,
+		DB:             database,
+		LLM:            client,
+		Skills:         registry,
+		CtxManager:     ctxMgr,
+		TaskID:         taskID,
+		WorkDir:        *workDir,
+		ProgressDir:    progressDir,
+		TargetFindings: *target,
 	})
 
 	if err := a.Run(ctx); err != nil {

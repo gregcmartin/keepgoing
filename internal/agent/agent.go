@@ -21,55 +21,58 @@ const systemPrompt = `You are a long-running autonomous research agent. You oper
 1. **Orient**: At the start of each session, review your progress file and recent history to understand where you left off.
 2. **Plan**: Break complex goals into concrete sub-tasks. Work on one sub-task at a time to avoid context exhaustion.
 3. **Execute**: Use your tools to search the web, scrape pages, run shell commands, and save findings.
-4. **Record**: Save every meaningful finding using save_finding. Update your progress after completing each sub-task.
+4. **Record**: Save every meaningful finding using save_finding IMMEDIATELY when you discover it.
 5. **Persist**: You may be interrupted and restarted. Always leave clear state so you can resume.
 
-## Important Guidelines
-- Work on ONE sub-task at a time. Complete it fully before moving on.
-- Save findings immediately when you discover them — don't wait until the end.
+## Critical Rules
+- NEVER say "TASK COMPLETE" until you have met the target number of findings specified in the task.
+- Save each CISO as a separate save_finding call with kind="ciso" as soon as you identify them.
+- Move FAST: research one company, save the CISO finding, immediately move to the next company. Do NOT over-research a single company.
+- Use LISTS: search for "list of Fortune 500 CISOs", "top CISOs in healthcare", "CISOs in defense industry", etc.
+- For each CISO, save: name, title, company, industry, LinkedIn URL (if found), and why they'd want on-premise AI security.
 - If a tool call fails, try an alternative approach rather than repeating the same action.
-- Be thorough but efficient. Depth over breadth.
-- When scraping, be respectful of rate limits. Space out requests.
-- Use bash for data processing, file operations, and running CLI tools.
-- Use firecrawl_search for web research and firecrawl_scrape for reading specific pages.
+- When scraping, be respectful of rate limits.
+- Use bash (curl, grep) for web research since firecrawl may not be available.
 - Use save_finding to persist structured results to the database.
-- Use spawn_subtask to delegate independent research to a sub-agent.
-- Use check_subtask to check on sub-agent progress.
+- Keep moving. Breadth over depth. Find the CISO, save them, move on.
 
 You have been running for a long time and may continue for days. Stay focused and methodical.`
 
 // Agent drives the core ReAct loop for a single task.
 type Agent struct {
-	db          *db.DB
-	llm         *llm.Client
-	skills      *skills.Registry
-	ctxManager  *kgctx.Manager
-	taskID      int64
-	step        int
-	workDir     string
-	progressDir string
+	db             *db.DB
+	llm            *llm.Client
+	skills         *skills.Registry
+	ctxManager     *kgctx.Manager
+	taskID         int64
+	step           int
+	workDir        string
+	progressDir    string
+	targetFindings int // minimum findings before task can complete (0 = no minimum)
 }
 
 // Config holds agent initialization parameters.
 type Config struct {
-	DB          *db.DB
-	LLM        *llm.Client
-	Skills      *skills.Registry
-	CtxManager  *kgctx.Manager
-	TaskID      int64
-	WorkDir     string
-	ProgressDir string
+	DB             *db.DB
+	LLM            *llm.Client
+	Skills         *skills.Registry
+	CtxManager     *kgctx.Manager
+	TaskID         int64
+	WorkDir        string
+	ProgressDir    string
+	TargetFindings int
 }
 
 func New(cfg Config) *Agent {
 	return &Agent{
-		db:          cfg.DB,
-		llm:         cfg.LLM,
-		skills:      cfg.Skills,
-		ctxManager:  cfg.CtxManager,
-		taskID:      cfg.TaskID,
-		workDir:     cfg.WorkDir,
-		progressDir: cfg.ProgressDir,
+		db:             cfg.DB,
+		llm:            cfg.LLM,
+		skills:         cfg.Skills,
+		ctxManager:     cfg.CtxManager,
+		taskID:         cfg.TaskID,
+		workDir:        cfg.WorkDir,
+		progressDir:    cfg.ProgressDir,
+		targetFindings: cfg.TargetFindings,
 	}
 }
 
@@ -163,18 +166,34 @@ func (a *Agent) Run(ctx context.Context) error {
 
 		// If no tool calls, the agent is done thinking — check if task is complete
 		if len(resp.ToolCalls) == 0 {
-			if a.isTaskComplete(resp.Content) {
-				result := resp.Content
+			// Check actual finding count before allowing completion
+			results, _ := a.db.GetResults(a.taskID)
+			cisoCount := 0
+			for _, r := range results {
+				if r.Kind == "ciso" {
+					cisoCount++
+				}
+			}
+
+			if a.isTaskComplete(resp.Content) && cisoCount >= a.targetFindings {
+				result := fmt.Sprintf("Found %d CISOs. %s", cisoCount, resp.Content)
 				if err := a.db.UpdateTaskStatus(a.taskID, "done", &result); err != nil {
 					return fmt.Errorf("update task done: %w", err)
 				}
-				a.saveProgress("Task completed: " + truncate(resp.Content, 200))
-				log.Printf("[agent] Task %d completed", a.taskID)
+				a.saveProgress(fmt.Sprintf("Task completed: %d CISOs found", cisoCount))
+				log.Printf("[agent] Task %d completed with %d CISOs", a.taskID, cisoCount)
 				return nil
 			}
-			// Agent responded without tool calls but isn't done — nudge it
+			// Agent responded without tool calls but isn't done — nudge it with progress
 			a.step++
-			nudge := "Continue working on the task. Use your tools to make progress. If you believe the task is complete, say 'TASK COMPLETE' and provide a final summary."
+			nudge := fmt.Sprintf(
+				"You have saved %d CISOs so far. You need %d total. Keep going! "+
+					"Search for more companies and CISOs. Try searching for: "+
+					"'Fortune 500 CISO list', 'healthcare company CISO', 'defense contractor CISO', "+
+					"'financial services CISO', 'energy company CISO'. "+
+					"Find the CISO, save them with save_finding (kind='ciso'), and move to the next company.",
+				cisoCount, a.targetFindings,
+			)
 			if _, err := a.db.AppendMessage(a.taskID, a.step, "user", nudge, nil, nil); err != nil {
 				return fmt.Errorf("save nudge: %w", err)
 			}
@@ -209,17 +228,29 @@ func (a *Agent) Run(ctx context.Context) error {
 
 		// Periodic nudge to save findings and update progress
 		if a.step%10 == 0 {
-			a.saveProgress(fmt.Sprintf("Step %d completed. Agent is actively working.", a.step))
-
-			// Remind the agent to persist findings
-			resultCount, _ := a.db.GetResults(a.taskID)
-			if len(resultCount) == 0 {
-				reminder := "REMINDER: You have not saved any findings yet. When you discover a company, CISO, or contact, immediately use the save_finding tool to persist it. Do not wait — save incrementally as you go."
-				if _, err := a.db.AppendMessage(a.taskID, a.step, "user", reminder, nil, nil); err != nil {
-					log.Printf("[agent] Error saving reminder: %v", err)
+			results, _ := a.db.GetResults(a.taskID)
+			cisoCount := 0
+			for _, r := range results {
+				if r.Kind == "ciso" {
+					cisoCount++
 				}
-				a.step++
 			}
+
+			a.saveProgress(fmt.Sprintf("Step %d. CISOs found: %d / %d target.", a.step, cisoCount, a.targetFindings))
+			log.Printf("[agent] Progress: %d / %d CISOs found", cisoCount, a.targetFindings)
+
+			// Always remind with progress count
+			reminder := fmt.Sprintf(
+				"PROGRESS UPDATE: You have saved %d / %d CISOs. "+
+					"Keep going! For each new company: (1) search for the CISO name, "+
+					"(2) call save_finding with kind='ciso' immediately, "+
+					"(3) move to the next company. Speed is important — don't over-research.",
+				cisoCount, a.targetFindings,
+			)
+			if _, err := a.db.AppendMessage(a.taskID, a.step, "user", reminder, nil, nil); err != nil {
+				log.Printf("[agent] Error saving reminder: %v", err)
+			}
+			a.step++
 		}
 
 		a.step++
