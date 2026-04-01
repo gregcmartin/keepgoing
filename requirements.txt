@@ -1,0 +1,2 @@
+mlx-lm>=0.20.0
+mlx-turboquant @ git+https://github.com/rachittshah/mlx-turboquant.git

@@ -15,8 +15,12 @@ Uses a local 27B parameter model via Apple Silicon MLX for inference — no clou
 ### Install Dependencies
 
 ```bash
-# Local LLM server
+# Local LLM server + TurboQuant KV cache compression
 pip install mlx-lm
+pip install git+https://github.com/rachittshah/mlx-turboquant.git
+
+# Or install all Python deps at once
+pip install -r requirements.txt
 
 # Node.js (for firecrawl CLI)
 brew install node
@@ -28,7 +32,13 @@ brew install node
 # Build
 go build -o keepgoing .
 
-# Start the model server (in a separate terminal)
+# Start the model server with TurboQuant (3-5x KV cache compression)
+python scripts/start_server.py
+
+# Or without TurboQuant
+python scripts/start_server.py --no-turboquant
+
+# Or directly via mlx_lm
 mlx_lm.server --model nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx --port 8000
 
 # Create and run a new task
@@ -130,12 +140,35 @@ Bash wrapper that:
 - Stops after 10 consecutive failures
 - Resets failure count when model server is healthy
 
+### TurboQuant KV Cache Compression
+
+Optional integration with [mlx-turboquant](https://github.com/rachittshah/mlx-turboquant) for PolarQuant KV cache quantization. This compresses the KV cache 3-5x, enabling much longer effective context on the same hardware.
+
+```bash
+# Start with 4-bit KV cache (default, best quality)
+python scripts/start_server.py --bits 4
+
+# More aggressive compression (3-bit)
+python scripts/start_server.py --bits 3
+```
+
+| Bits | Compression | Quality (cosine sim) |
+|------|------------|---------------------|
+| 4    | ~4.6x      | 0.995+              |
+| 3    | ~4.6x      | 0.995+              |
+| 2    | ~4.0x      | ~0.97               |
+
+For a 27B model with 256K context, TurboQuant can reduce KV cache memory from ~40GB to ~8-10GB, making full context window usage practical on machines with 64GB+ unified memory.
+
 ## Project Structure
 
 ```
 keepgoing/
 ├── main.go                      # Entry point, CLI flags, wiring
 ├── run.sh                       # Crash-resilient runner
+├── scripts/
+│   └── start_server.py          # Model server with TurboQuant integration
+├── requirements.txt             # Python dependencies
 ├── internal/
 │   ├── agent/
 │   │   ├── agent.go             # Core ReAct loop with crash recovery
