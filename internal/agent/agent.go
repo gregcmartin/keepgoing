@@ -190,9 +190,10 @@ func (a *Agent) Run(ctx context.Context) error {
 				result = fmt.Sprintf("Error: %v", err)
 			}
 
-			// Truncate very long results to prevent context blowup
-			if len(result) > 8000 {
-				result = result[:8000] + "\n\n[output truncated at 8000 chars]"
+			// Truncate very long results — even with 256K context,
+			// raw HTML dumps waste tokens. Keep useful content.
+			if len(result) > 6000 {
+				result = result[:6000] + "\n\n[output truncated at 6000 chars]"
 			}
 
 			tcID := tc.ID
@@ -206,9 +207,19 @@ func (a *Agent) Run(ctx context.Context) error {
 			log.Printf("[agent] Context compaction error: %v", err)
 		}
 
-		// Update progress file periodically
-		if a.step%5 == 0 {
+		// Periodic nudge to save findings and update progress
+		if a.step%10 == 0 {
 			a.saveProgress(fmt.Sprintf("Step %d completed. Agent is actively working.", a.step))
+
+			// Remind the agent to persist findings
+			resultCount, _ := a.db.GetResults(a.taskID)
+			if len(resultCount) == 0 {
+				reminder := "REMINDER: You have not saved any findings yet. When you discover a company, CISO, or contact, immediately use the save_finding tool to persist it. Do not wait — save incrementally as you go."
+				if _, err := a.db.AppendMessage(a.taskID, a.step, "user", reminder, nil, nil); err != nil {
+					log.Printf("[agent] Error saving reminder: %v", err)
+				}
+				a.step++
+			}
 		}
 
 		a.step++

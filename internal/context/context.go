@@ -12,9 +12,11 @@ import (
 
 const (
 	// MaxMessages triggers compaction when exceeded.
-	MaxMessages = 40
+	// Model supports 256K context so we can keep more history,
+	// but still compact to avoid slow inference at extreme lengths.
+	MaxMessages = 80
 	// CompactWindow is how many old messages get summarized at once.
-	CompactWindow = 20
+	CompactWindow = 30
 )
 
 // Manager handles context window compaction via rolling summarization.
@@ -62,10 +64,14 @@ func (m *Manager) CompactIfNeeded(ctx context.Context, taskID int64) error {
 		return nil // Not enough to summarize
 	}
 
-	// Build the conversation text for summarization
+	// Build the conversation text for summarization, sanitizing non-text content
 	var sb strings.Builder
 	for _, msg := range toSummarize {
-		sb.WriteString(fmt.Sprintf("[%s]: %s\n", msg.Role, msg.Content))
+		content := sanitizeForSummary(msg.Content)
+		if len(content) > 2000 {
+			content = content[:2000] + "...[truncated]"
+		}
+		sb.WriteString(fmt.Sprintf("[%s]: %s\n", msg.Role, content))
 	}
 
 	// Ask the LLM to summarize
@@ -118,4 +124,43 @@ func WriteProgressFile(path string, taskID int64, goal string, progress string) 
 // ReadProgressFile reads the current progress state from disk.
 func ReadProgressFile(path string) (string, error) {
 	return readFile(path)
+}
+
+// sanitizeForSummary removes non-printable characters and HTML that confuse summarization.
+func sanitizeForSummary(s string) string {
+	var b strings.Builder
+	b.Grow(len(s))
+	for _, r := range s {
+		if r == '\n' || r == '\t' || (r >= 32 && r < 127) {
+			b.WriteRune(r)
+		} else if r >= 128 && r < 65536 {
+			b.WriteRune(r) // Keep valid unicode
+		}
+		// Skip control chars and invalid bytes
+	}
+	result := b.String()
+	// Strip HTML tags that bloat the summary
+	result = stripHTMLTags(result)
+	return result
+}
+
+// stripHTMLTags removes HTML tags but keeps text content.
+func stripHTMLTags(s string) string {
+	var b strings.Builder
+	inTag := false
+	for _, r := range s {
+		if r == '<' {
+			inTag = true
+			continue
+		}
+		if r == '>' {
+			inTag = false
+			b.WriteRune(' ')
+			continue
+		}
+		if !inTag {
+			b.WriteRune(r)
+		}
+	}
+	return b.String()
 }
