@@ -12,11 +12,11 @@ import (
 
 const (
 	// MaxMessages triggers compaction when exceeded.
-	// Model supports 256K context so we can keep more history,
-	// but still compact to avoid slow inference at extreme lengths.
-	MaxMessages = 80
+	// Despite the model supporting 256K context, mlx_lm.server crashes
+	// at high token counts. Keep this conservative.
+	MaxMessages = 20
 	// CompactWindow is how many old messages get summarized at once.
-	CompactWindow = 30
+	CompactWindow = 10
 )
 
 // Manager handles context window compaction via rolling summarization.

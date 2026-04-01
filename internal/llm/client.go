@@ -13,7 +13,7 @@ import (
 const (
 	defaultBaseURL = "http://localhost:8000"
 	defaultModel   = "nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx"
-	requestTimeout = 120 * time.Second
+	requestTimeout = 600 * time.Second // 10 min — local 27B model with reasoning can be slow
 	maxRetries     = 3
 )
 
@@ -61,6 +61,7 @@ type ToolFunction struct {
 // Response is what we get back from the model.
 type Response struct {
 	Content      string
+	Reasoning    string // For reasoning models that separate thinking from output
 	ToolCalls    []ToolCall
 	FinishReason string
 	Usage        Usage
@@ -79,11 +80,20 @@ type chatRequest struct {
 	Tools    []Tool    `json:"tools,omitempty"`
 }
 
+// chatResponseMessage extends Message with the reasoning field some models return.
+type chatResponseMessage struct {
+	Role       string     `json:"role"`
+	Content    string     `json:"content"`
+	Reasoning  string     `json:"reasoning"`
+	ToolCalls  []ToolCall `json:"tool_calls"`
+	ToolCallID string     `json:"tool_call_id,omitempty"`
+}
+
 // chatResponse is the response body from /v1/chat/completions.
 type chatResponse struct {
 	Choices []struct {
-		Message      Message `json:"message"`
-		FinishReason string  `json:"finish_reason"`
+		Message      chatResponseMessage `json:"message"`
+		FinishReason string              `json:"finish_reason"`
 	} `json:"choices"`
 	Usage Usage `json:"usage"`
 }
@@ -171,8 +181,18 @@ func (c *Client) doRequest(ctx context.Context, body []byte) (*Response, error) 
 	}
 
 	choice := chatResp.Choices[0]
+
+	// Some reasoning models put output in 'reasoning' instead of 'content'.
+	// Merge them so the agent loop always sees the full response.
+	content := choice.Message.Content
+	reasoning := choice.Message.Reasoning
+	if content == "" && reasoning != "" {
+		content = reasoning
+	}
+
 	return &Response{
-		Content:      choice.Message.Content,
+		Content:      content,
+		Reasoning:    reasoning,
 		ToolCalls:    choice.Message.ToolCalls,
 		FinishReason: choice.FinishReason,
 		Usage:        chatResp.Usage,

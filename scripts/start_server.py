@@ -43,15 +43,24 @@ def main():
     if not args.no_turboquant:
         try:
             from mlx_turboquant.integration import patch_sdpa
-            patch_sdpa(bits=args.bits)
+
+            # Patch SDPA to support quantized KV tensors.
+            # This is the minimal integration — it patches the attention
+            # function so that if TurboQuantKVCache is used, the quantized
+            # tensors are handled transparently.
+            patch_sdpa()
+
             turboquant_available = True
-            print(f"[keepgoing] TurboQuant enabled: {args.bits}-bit KV cache quantization")
-            print(f"[keepgoing] Expected ~{4.6 if args.bits >= 3 else 4.0}x KV cache compression")
+            print(f"[keepgoing] TurboQuant SDPA patch applied ({args.bits}-bit ready)")
+            print(f"[keepgoing] Note: Full KV cache quantization requires model-specific")
+            print(f"[keepgoing] cache integration. SDPA patch enables the fast path.")
         except ImportError:
             print("[keepgoing] TurboQuant not installed, using standard KV cache")
             print("[keepgoing] Install with: pip install mlx-turboquant")
         except Exception as e:
-            print(f"[keepgoing] TurboQuant patch failed ({e}), falling back to standard KV cache")
+            import traceback
+            traceback.print_exc()
+            print(f"[keepgoing] TurboQuant patch failed ({e}), falling back to standard")
 
     # Start the server via mlx_lm.server
     # We import and run it directly so the monkey-patch stays active
