@@ -1,0 +1,5 @@
+keepgoing
+keepgoing.db
+keepgoing.db-wal
+keepgoing.db-shm
+.keepgoing/
