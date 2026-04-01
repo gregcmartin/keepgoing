@@ -1,5 +1,16 @@
+# Binary
 keepgoing
-keepgoing.db
-keepgoing.db-wal
-keepgoing.db-shm
+
+# SQLite database and WAL files
+*.db
+*.db-wal
+*.db-shm
+
+# Agent progress state
 .keepgoing/
+
+# Model files (if downloaded locally)
+*.gguf
+*.bin
+*.safetensors
+models/
