@@ -7,12 +7,14 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"regexp"
+	"strings"
 	"time"
 )
 
 const (
 	defaultBaseURL = "http://localhost:8000"
-	defaultModel   = "nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx"
+	defaultModel   = "mlx-community/gemma-4-31b-it-4bit"
 	requestTimeout = 600 * time.Second // 10 min — local 27B model with reasoning can be slow
 	maxRetries     = 3
 )
@@ -190,10 +192,27 @@ func (c *Client) doRequest(ctx context.Context, body []byte) (*Response, error) 
 		content = reasoning
 	}
 
+	toolCalls := choice.Message.ToolCalls
+
+	// Gemma 4 embeds tool calls in content using special tokens:
+	//   <|tool_call>call:func_name{key:<|"|>value<|"|>}<tool_call|>
+	// Parse these into standard ToolCall structs.
+	if len(toolCalls) == 0 && strings.Contains(content, "<|tool_call>") {
+		parsed := parseGemmaToolCalls(content)
+		if len(parsed) > 0 {
+			toolCalls = parsed
+			// Remove tool call tokens from content
+			content = gemmaToolCallRe.ReplaceAllString(content, "")
+			content = strings.TrimSpace(content)
+			// Override finish reason since the model made tool calls
+			choice.FinishReason = "tool_calls"
+		}
+	}
+
 	return &Response{
 		Content:      content,
 		Reasoning:    reasoning,
-		ToolCalls:    choice.Message.ToolCalls,
+		ToolCalls:    toolCalls,
 		FinishReason: choice.FinishReason,
 		Usage:        chatResp.Usage,
 	}, nil
@@ -220,4 +239,50 @@ func (c *Client) Ping(ctx context.Context) error {
 // Model returns the configured model name.
 func (c *Client) Model() string {
 	return c.model
+}
+
+// --- Gemma 4 tool call parsing ---
+
+// Matches: <|tool_call>call:func_name{args}<tool_call|>
+var gemmaToolCallRe = regexp.MustCompile(`<\|tool_call>call:(\w+)\{(.*?)\}<tool_call\|>`)
+
+// Matches key-value pairs inside tool call args:
+//   key:<|"|>value<|"|>  or  key:value
+var gemmaArgRe = regexp.MustCompile(`(\w+):(?:<\|"\|>(.*?)<\|"\|>|([^,}]*))`)
+
+func parseGemmaToolCalls(content string) []ToolCall {
+	matches := gemmaToolCallRe.FindAllStringSubmatch(content, -1)
+	if len(matches) == 0 {
+		return nil
+	}
+
+	var calls []ToolCall
+	for i, match := range matches {
+		funcName := match[1]
+		argsStr := match[2]
+
+		// Parse key-value args into a JSON object
+		args := make(map[string]interface{})
+		argMatches := gemmaArgRe.FindAllStringSubmatch(argsStr, -1)
+		for _, am := range argMatches {
+			key := am[1]
+			// am[2] is quoted value, am[3] is unquoted value
+			value := am[2]
+			if value == "" {
+				value = strings.TrimSpace(am[3])
+			}
+			args[key] = value
+		}
+
+		argsJSON, _ := json.Marshal(args)
+		calls = append(calls, ToolCall{
+			ID:   fmt.Sprintf("gemma-tc-%d", i),
+			Type: "function",
+			Function: FunctionCall{
+				Name:      funcName,
+				Arguments: string(argsJSON),
+			},
+		})
+	}
+	return calls
 }
