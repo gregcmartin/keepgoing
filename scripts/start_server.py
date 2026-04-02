@@ -20,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description="Start mlx_lm server with TurboQuant KV cache")
     parser.add_argument(
         "--model",
-        default="nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx",
+        default="mlx-community/gemma-4-31b-it-4bit",
         help="Model name or path",
     )
     parser.add_argument("--port", type=int, default=8000, help="Server port")

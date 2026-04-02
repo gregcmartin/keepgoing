@@ -2,7 +2,7 @@
 
 A long-running autonomous agent harness built in Go. Designed to run 24/7 for weeks on any given task, inspired by [Anthropic's harness patterns](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents) for long-running agents.
 
-Uses a local 27B parameter model via Apple Silicon MLX for inference — no cloud API keys required.
+Uses a local Gemma 4 31B model via Apple Silicon MLX for inference — no cloud API keys required.
 
 ## Quick Start
 
@@ -39,7 +39,7 @@ python scripts/start_server.py
 python scripts/start_server.py --no-turboquant
 
 # Or directly via mlx_lm
-mlx_lm.server --model nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx --port 8000
+mlx_lm.server --model mlx-community/gemma-4-31b-it-4bit --port 8000
 
 # Create and run a new task
 ./keepgoing -task "your research goal here"
@@ -211,4 +211,4 @@ sqlite3 keepgoing.db "SELECT COUNT(*) FROM agent_state WHERE task_id = 1;"
 
 ## Model
 
-Uses [`nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx`](https://huggingface.co/nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx) — a 27B parameter model quantized for Apple Silicon MLX. Served locally via `mlx_lm.server` with an OpenAI-compatible API on port 8000. ~15GB download, runs in ~15GB unified memory.
+Uses [`mlx-community/gemma-4-31b-it-4bit`](https://huggingface.co/mlx-community/gemma-4-31b-it-4bit) — Google's Gemma 4 31B instruction-tuned model, 4-bit quantized for Apple Silicon MLX. Served locally via `mlx_lm.server` with an OpenAI-compatible API on port 8000.

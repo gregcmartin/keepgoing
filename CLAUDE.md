@@ -13,7 +13,7 @@ go build -o keepgoing .                    # Build
 
 The model server must be running separately:
 ```bash
-mlx_lm.server --model nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx --port 8000
+mlx_lm.server --model mlx-community/gemma-4-31b-it-4bit --port 8000
 ```
 
 Dependencies: `github.com/mattn/go-sqlite3` (CGo — requires C compiler).

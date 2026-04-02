@@ -6,7 +6,7 @@
 # The model server must be started separately:
 #   python scripts/start_server.py                    # With TurboQuant KV cache compression
 #   python scripts/start_server.py --no-turboquant    # Standard KV cache
-#   mlx_lm.server --model nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx --port 8000
+#   mlx_lm.server --model mlx-community/gemma-4-31b-it-4bit --port 8000
 
 set -euo pipefail
 
@@ -38,7 +38,7 @@ wait_for_model_server() {
 if [ "$(check_model_server)" != "200" ]; then
     echo "[$(date)] Model server not detected."
     echo "[$(date)] Start it with: python scripts/start_server.py"
-    echo "[$(date)]   (or: mlx_lm.server --model nightmedia/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-qx64-hi-mlx --port 8000)"
+    echo "[$(date)]   (or: mlx_lm.server --model mlx-community/gemma-4-31b-it-4bit --port 8000)"
     wait_for_model_server
 fi
 
