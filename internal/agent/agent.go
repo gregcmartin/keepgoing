@@ -367,7 +367,47 @@ func (a *Agent) buildChatMessages() ([]llm.Message, error) {
 		}
 		chatMsgs = append(chatMsgs, cm)
 	}
-	return chatMsgs, nil
+
+	// Merge consecutive messages with the same role.
+	// Some models (Gemma) require strict user/assistant alternation.
+	// System messages get folded into the next user message.
+	merged := make([]llm.Message, 0, len(chatMsgs))
+	for _, cm := range chatMsgs {
+		if len(merged) > 0 && merged[len(merged)-1].Role == cm.Role && len(cm.ToolCalls) == 0 && cm.ToolCallID == "" {
+			merged[len(merged)-1].Content += "\n\n" + cm.Content
+		} else {
+			merged = append(merged, cm)
+		}
+	}
+
+	// Fold system messages into the first user message for models that
+	// don't support system role (or treat it as user).
+	var result []llm.Message
+	var systemContent string
+	for _, cm := range merged {
+		if cm.Role == "system" {
+			if systemContent != "" {
+				systemContent += "\n\n"
+			}
+			systemContent += cm.Content
+		} else {
+			if systemContent != "" && cm.Role == "user" {
+				cm.Content = systemContent + "\n\n" + cm.Content
+				systemContent = ""
+			} else if systemContent != "" {
+				// Insert system as a user message before this non-user message
+				result = append(result, llm.Message{Role: "user", Content: systemContent})
+				systemContent = ""
+			}
+			result = append(result, cm)
+		}
+	}
+	// If only system messages remain
+	if systemContent != "" {
+		result = append(result, llm.Message{Role: "user", Content: systemContent})
+	}
+
+	return result, nil
 }
 
 func (a *Agent) isTaskComplete(content string) bool {

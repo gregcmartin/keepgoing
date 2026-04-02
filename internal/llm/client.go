@@ -12,7 +12,7 @@ import (
 
 const (
 	defaultBaseURL = "http://localhost:8000"
-	defaultModel   = "mlx-community/gemma-4-31b-it-4bit"
+	defaultModel   = "mlx-community/gemma-3-27b-it-4bit"
 	requestTimeout = 600 * time.Second // 10 min — local 27B model with reasoning can be slow
 	maxRetries     = 3
 )
