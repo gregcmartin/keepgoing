@@ -244,7 +244,8 @@ func (c *Client) Model() string {
 // --- Gemma 4 tool call parsing ---
 
 // Matches: <|tool_call>call:func_name{args}<tool_call|>
-var gemmaToolCallRe = regexp.MustCompile(`<\|tool_call>call:(\w+)\{(.*?)\}<tool_call\|>`)
+// (?s) enables dotall mode so . matches newlines (commands often contain \n)
+var gemmaToolCallRe = regexp.MustCompile(`(?s)<\|tool_call>call:(\w+)\{(.*?)\}<tool_call\|>`)
 
 // Matches key-value pairs inside tool call args:
 //   key:<|"|>value<|"|>  or  key:value

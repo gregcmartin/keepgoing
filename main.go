@@ -58,8 +58,7 @@ func main() {
 	// Register skills
 	registry := skills.NewRegistry()
 	registry.Register(&skills.BashSkill{})
-	registry.Register(&skills.FirecrawlScrapeSkill{})
-	registry.Register(&skills.FirecrawlSearchSkill{})
+	// Firecrawl skills omitted — not installed. Agent uses bash + curl instead.
 
 	// Context manager
 	ctxMgr := kgctx.NewManager(database, client)
