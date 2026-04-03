@@ -14,3 +14,7 @@ keepgoing
 *.bin
 *.safetensors
 models/
+*.html
+search_*.html
+*.txt
+!requirements.txt
