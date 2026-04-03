@@ -262,28 +262,88 @@ func parseGemmaToolCalls(content string) []ToolCall {
 		funcName := match[1]
 		argsStr := match[2]
 
-		// Parse key-value args into a JSON object
-		args := make(map[string]interface{})
-		argMatches := gemmaArgRe.FindAllStringSubmatch(argsStr, -1)
-		for _, am := range argMatches {
-			key := am[1]
-			// am[2] is quoted value, am[3] is unquoted value
-			value := am[2]
-			if value == "" {
-				value = strings.TrimSpace(am[3])
+		// First, try to convert Gemma's format directly to valid JSON.
+		// Replace <|"|> tokens with proper quotes and fix the structure.
+		jsonStr := cleanGemmaArgs(argsStr)
+
+		// Validate it's proper JSON
+		var testObj interface{}
+		if json.Unmarshal([]byte(jsonStr), &testObj) != nil {
+			// Fallback: parse key-value pairs manually
+			args := make(map[string]interface{})
+			argMatches := gemmaArgRe.FindAllStringSubmatch(argsStr, -1)
+			for _, am := range argMatches {
+				key := am[1]
+				value := am[2]
+				if value == "" {
+					value = strings.TrimSpace(am[3])
+				}
+				// Clean any remaining Gemma tokens from values
+				value = strings.ReplaceAll(value, `<|"|>`, "")
+				args[key] = value
 			}
-			args[key] = value
+			jsonBytes, _ := json.Marshal(args)
+			jsonStr = string(jsonBytes)
 		}
 
-		argsJSON, _ := json.Marshal(args)
 		calls = append(calls, ToolCall{
 			ID:   fmt.Sprintf("gemma-tc-%d", i),
 			Type: "function",
 			Function: FunctionCall{
 				Name:      funcName,
-				Arguments: string(argsJSON),
+				Arguments: jsonStr,
 			},
 		})
 	}
 	return calls
+}
+
+// cleanGemmaArgs converts Gemma's key-value format to valid JSON.
+// Input:  data:{company:<|"|>Apple<|"|>,name:<|"|>John<|"|>},kind:<|"|>ciso<|"|>
+// Output: {"data":{"company":"Apple","name":"John"},"kind":"ciso"}
+func cleanGemmaArgs(s string) string {
+	// Step 1: Replace Gemma quote tokens with actual quotes
+	s = strings.ReplaceAll(s, `<|"|>`, `"`)
+
+	// Step 2: Wrap in braces if needed
+	s = strings.TrimSpace(s)
+	if !strings.HasPrefix(s, "{") {
+		s = "{" + s + "}"
+	}
+
+	// Step 3: Quote all bare keys (word followed by : that isn't already quoted)
+	// Process repeatedly since nested objects need multiple passes
+	quoteKeysRe := regexp.MustCompile(`([{,])\s*([a-zA-Z_]\w*)\s*:`)
+	for i := 0; i < 3; i++ {
+		prev := s
+		s = quoteKeysRe.ReplaceAllString(s, `$1"$2":`)
+		if s == prev {
+			break
+		}
+	}
+
+	// Step 4: Quote bare values (unquoted strings between : and , or })
+	// Match :somevalue, or :somevalue} but not :{  or :"
+	bareValRe := regexp.MustCompile(`:([^"{}\[\],][^,}]*)([,}])`)
+	s = bareValRe.ReplaceAllStringFunc(s, func(match string) string {
+		// Extract the value part
+		colonIdx := strings.Index(match, ":")
+		val := match[colonIdx+1 : len(match)-1]
+		end := match[len(match)-1:]
+		val = strings.TrimSpace(val)
+		if val == "" || val == "null" || val == "true" || val == "false" {
+			return match
+		}
+		// Check if it's already quoted
+		if strings.HasPrefix(val, `"`) {
+			return match
+		}
+		// Check if it's a number
+		if _, err := fmt.Sscanf(val, "%f", new(float64)); err == nil {
+			return match
+		}
+		return `:"` + val + `"` + end
+	})
+
+	return s
 }

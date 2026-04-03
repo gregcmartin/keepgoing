@@ -1,0 +1,100 @@
+<td><a href="/wiki/Walmart" title="Walmart">Walmart</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/40px-Flag_of_Arkansas.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Arkansas.svg/60px-Flag_of_Arkansas.svg.png 2x" data-file-width="450" data-file-height="300" /></span></span> </span><a href="/wiki/Arkansas" title="Arkansas">Arkansas</a>
+<td>General merchandisers
+<td>$703.06 billion
+<td><a href="/wiki/Amazon_(company)" title="Amazon (company)">Amazon</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/40px-Flag_of_Washington.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/60px-Flag_of_Washington.svg.png 2x" data-file-width="1106" data-file-height="658" /></span></span> </span><a href="/wiki/Washington_(state)" title="Washington (state)">Washington</a>
+<td>Internet services and retailing
+<td>$574.8 billion
+<td><a href="/wiki/Apple_Inc." title="Apple Inc.">Apple</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/40px-Flag_of_California.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/60px-Flag_of_California.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/California" title="California">California</a>
+<td>Computers, office equipment
+<td>$383.3 billion
+<td><a href="/wiki/UnitedHealth_Group" title="UnitedHealth Group">UnitedHealth Group</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/40px-Flag_of_Minnesota.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/60px-Flag_of_Minnesota.svg.png 2x" data-file-width="1000" data-file-height="600" /></span></span> </span><a href="/wiki/Minnesota" title="Minnesota">Minnesota</a>
+<td>Health care: insurance and managed care
+<td>$371.6 billion
+<td><a href="/wiki/Berkshire_Hathaway" title="Berkshire Hathaway">Berkshire Hathaway</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Nebraska.svg/40px-Flag_of_Nebraska.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Flag_of_Nebraska.svg/60px-Flag_of_Nebraska.svg.png 2x" data-file-width="750" data-file-height="450" /></span></span> </span><a href="/wiki/Nebraska" title="Nebraska">Nebraska</a>
+<td>Insurance: property and casualty (stock)
+<td>$364.5 billion
+<td><a href="/wiki/CVS_Health" title="CVS Health">CVS Health</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Rhode_Island.svg/20px-Flag_of_Rhode_Island.svg.png" decoding="async" width="19" height="17" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Flag_of_Rhode_Island.svg/40px-Flag_of_Rhode_Island.svg.png 1.5x" data-file-width="660" data-file-height="580" /></span></span> </span><a href="/wiki/Rhode_Island" title="Rhode Island">Rhode Island</a>
+<td>Health care: pharmacy and other services
+<td>$357.8 billion
+<td><a href="/wiki/ExxonMobil" title="ExxonMobil">ExxonMobil</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/40px-Flag_of_Texas.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/60px-Flag_of_Texas.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/Texas" title="Texas">Texas</a>
+<td>Petroleum refining
+<td>$344.6 billion
+<td><a href="/wiki/Alphabet_Inc." title="Alphabet Inc.">Alphabet Inc.</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/40px-Flag_of_California.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/60px-Flag_of_California.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/California" title="California">California</a>
+<td>Internet services and retailing
+<td>$307.4 billion
+<td><a href="/wiki/McKesson_Corporation" title="McKesson Corporation">McKesson Corporation</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/40px-Flag_of_Texas.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/60px-Flag_of_Texas.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/Texas" title="Texas">Texas</a>
+<td>Wholesalers: health care
+<td>$276.7 billion
+<td><a href="/wiki/Cencora" title="Cencora">Cencora</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/40px-Flag_of_Pennsylvania.svg.png" decoding="async" width="21" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/60px-Flag_of_Pennsylvania.svg.png 2x" data-file-width="740" data-file-height="540" /></span></span> </span><a href="/wiki/Pennsylvania" title="Pennsylvania">Pennsylvania</a>
+<td>Wholesalers: health care
+<td>$262.2 billion
+<td><a href="/wiki/Costco" title="Costco">Costco</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/40px-Flag_of_Washington.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/60px-Flag_of_Washington.svg.png 2x" data-file-width="1106" data-file-height="658" /></span></span> </span><a href="/wiki/Washington_(state)" title="Washington (state)">Washington</a>
+<td>General merchandisers
+<td>$242.3 billion
+<td><a href="/wiki/JPMorgan_Chase" title="JPMorgan Chase">JPMorgan Chase</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/40px-Flag_of_New_York.svg.png" decoding="async" width="23" height="12" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/60px-Flag_of_New_York.svg.png 2x" data-file-width="900" data-file-height="450" /></span></span> </span><a href="/wiki/New_York_(state)" title="New York (state)">New York</a>
+<td>Commercial banks
+<td>$239.4 billion
+<td><a href="/wiki/Microsoft" title="Microsoft">Microsoft</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/40px-Flag_of_Washington.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/5/54/Flag_of_Washington.svg/60px-Flag_of_Washington.svg.png 2x" data-file-width="1106" data-file-height="658" /></span></span> </span><a href="/wiki/Washington_(state)" title="Washington (state)">Washington</a>
+<td>Computer software
+<td>$211.9 billion
+<td><a href="/wiki/Cardinal_Health" title="Cardinal Health">Cardinal Health</a>
+<td><span class="flagicon nowrap"><span typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/40px-Flag_of_Ohio.svg.png" decoding="async" width="25" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/60px-Flag_of_Ohio.svg.png 2x" data-file-width="520" data-file-height="320" /></span></span> </span><a href="/wiki/Ohio" title="Ohio">Ohio</a>
+<td>Wholesalers: health care
+<td>$205.0 billion
+<td><a href="/wiki/Chevron_Corporation" title="Chevron Corporation">Chevron Corporation</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/40px-Flag_of_Texas.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/60px-Flag_of_Texas.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/Texas" title="Texas">Texas</a>
+<td>Petroleum refining
+<td>$200.9 billion
+<td><a href="/wiki/Cigna" class="mw-redirect" title="Cigna">Cigna</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_Connecticut.svg/20px-Flag_of_Connecticut.svg.png" decoding="async" width="19" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/9/96/Flag_of_Connecticut.svg/40px-Flag_of_Connecticut.svg.png 1.5x" data-file-width="330" data-file-height="260" /></span></span> </span><a href="/wiki/Connecticut" title="Connecticut">Connecticut</a>
+<td>Health care: pharmacy and other services
+<td>$195.3 billion
+<td><a href="/wiki/Ford_Motor_Company" title="Ford Motor Company">Ford Motor Company</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/40px-Flag_of_Michigan.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/60px-Flag_of_Michigan.svg.png 2x" data-file-width="512" data-file-height="342" /></span></span> </span><a href="/wiki/Michigan" title="Michigan">Michigan</a>
+<td>Motor vehicles &amp; parts
+<td>$176.2 billion
+<td><a href="/wiki/Bank_of_America" title="Bank of America">Bank of America</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Flag_of_North_Carolina.svg/40px-Flag_of_North_Carolina.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Flag_of_North_Carolina.svg/60px-Flag_of_North_Carolina.svg.png 2x" data-file-width="750" data-file-height="500" /></span></span> </span><a href="/wiki/North_Carolina" title="North Carolina">North Carolina</a>
+<td>Commercial banks
+<td>$171.9 billion
+<td><a href="/wiki/General_Motors" title="General Motors">General Motors</a>
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/40px-Flag_of_Michigan.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Michigan.svg/60px-Flag_of_Michigan.svg.png 2x" data-file-width="512" data-file-height="342" /></span></span> </span><a href="/wiki/Michigan" title="Michigan">Michigan</a>
+<td>Motor vehicles &amp; parts
+<td>$171.8 billion
+<td><a href="/wiki/Elevance_Health" title="Elevance Health">Elevance Health</a>
+<td><span data-sort-value="Indiana"><span class="flagicon"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Flag_of_Indiana.svg/40px-Flag_of_Indiana.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Flag_of_Indiana.svg/60px-Flag_of_Indiana.svg.png 2x" data-file-width="750" data-file-height="500" /></span></span>&#160;</span><a href="/wiki/Indiana" title="Indiana">Indiana</a></span>
+<td>Health care: insurance and managed care
+<td>$171.3 billion
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/40px-Flag_of_California.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_California.svg/60px-Flag_of_California.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/California" title="California">California</a>
+<td>57
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/40px-Flag_of_New_York.svg.png" decoding="async" width="23" height="12" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_New_York.svg/60px-Flag_of_New_York.svg.png 2x" data-file-width="900" data-file-height="450" /></span></span> </span><a href="/wiki/New_York_(state)" title="New York (state)">New York</a>
+<td>52
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/40px-Flag_of_Texas.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Texas.svg/60px-Flag_of_Texas.svg.png 2x" data-file-width="900" data-file-height="600" /></span></span> </span><a href="/wiki/Texas" title="Texas">Texas</a>
+<td>52
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Illinois.svg/40px-Flag_of_Illinois.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Illinois.svg/60px-Flag_of_Illinois.svg.png 2x" data-file-width="500" data-file-height="300" /></span></span> </span><a href="/wiki/Illinois" title="Illinois">Illinois</a>
+<td>32
+<td><span class="flagicon nowrap"><span typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/40px-Flag_of_Ohio.svg.png" decoding="async" width="25" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Flag_of_Ohio.svg/60px-Flag_of_Ohio.svg.png 2x" data-file-width="520" data-file-height="320" /></span></span> </span><a href="/wiki/Ohio" title="Ohio">Ohio</a>
+<td>27
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/4/47/Flag_of_Virginia.svg/40px-Flag_of_Virginia.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/4/47/Flag_of_Virginia.svg/60px-Flag_of_Virginia.svg.png 2x" data-file-width="512" data-file-height="341" /></span></span> </span><a href="/wiki/Virginia" title="Virginia">Virginia</a>
+<td>24
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/40px-Flag_of_Florida.svg.png" decoding="async" width="23" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Florida.svg/60px-Flag_of_Florida.svg.png 2x" data-file-width="4500" data-file-height="3000" /></span></span> </span><a href="/wiki/Florida" title="Florida">Florida</a>
+<td>22
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/40px-Flag_of_Pennsylvania.svg.png" decoding="async" width="21" height="15" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Flag_of_Pennsylvania.svg/60px-Flag_of_Pennsylvania.svg.png 2x" data-file-width="740" data-file-height="540" /></span></span> </span><a href="/wiki/Pennsylvania" title="Pennsylvania">Pennsylvania</a>
+<td>20
+<td><span data-sort-value="Georgia"><span class="flagicon"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_the_State_of_Georgia.svg/40px-Flag_of_the_State_of_Georgia.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/0/08/Flag_of_the_State_of_Georgia.svg/60px-Flag_of_the_State_of_Georgia.svg.png 2x" data-file-width="960" data-file-height="600" /></span></span>&#160;</span><a href="/wiki/Georgia_(U.S._state)" title="Georgia (U.S. state)">Georgia</a></span>
+<td>18
+<td><span class="flagicon nowrap"><span class="mw-image-border" typeof="mw:File"><span><img alt="" src="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/40px-Flag_of_Minnesota.svg.png" decoding="async" width="23" height="14" class="mw-file-element" srcset="//upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Flag_of_Minnesota.svg/60px-Flag_of_Minnesota.svg.png 2x" data-file-width="1000" data-file-height="600" /></span></span> </span><a href="/wiki/Minnesota" title="Minnesota">Minnesota</a>
+<td>17
